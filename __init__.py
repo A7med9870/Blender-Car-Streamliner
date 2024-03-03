@@ -72,7 +72,7 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
     documentation_url: bpy.props.StringProperty(
         name="Documentation URL",
         description="URL for the addon documentation",
-        default="https://docs.google.com/document/d/1JTWJL8-xhYjZdUmo6fnWvTf26J8NPVYRA0oVeSTUC6E/edit?usp=sharing",
+        default="https://github.com/A7med9870/Blender-Car-Streamliner",
     )
     YT_url: bpy.props.StringProperty(
         name="YT URL",
