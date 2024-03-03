@@ -1,29 +1,31 @@
-#Blender-Car-Streamliner is a Blender addon designed to assist with setting up cars for modding or exporting into Unreal Engine. Originally a set of Blender scripts, it has been converted into a convenient addon with several useful features.
+# Blender-Car-Streamliner
 
-#Features
+A blender addon for helping with Seting up your car, either modding or Exporting into unreal engine
+Was orignaly some blender scripts i used to run a lot, turned into an addon
 
-References Box: Provides a dedicated space for referencing your vehicle.
+# Features are
+-(Only UE at the momment) Refernces box for your vehicle
 
-Cut and Mirror: Easily perform cutting and mirroring operations with just two clicks, ideal for exterior modeling.
+-Cut and Mirror with 2 clicks (For outside modeling)
 
-Origin Manipulation: Simplifies origin adjustments, particularly useful for beginners.
+-Origin Maniplation (For begginers mainly)
 
-Move Objects to 0,0,0: Quickly move selected object(s) to the origin.
+-Move Object(s) to 0,0,0
 
-Car Parenting Setup (UE): Streamlines the process of setting up parent-child relationships for car parts, with the ability to add custom parts.
+-(Only UE) Car Pararenting setup with abliy to add custom parts
 
-Camera Far Clip (UE): Adjusts the camera's far clip to facilitate working with large objects in Unreal Engine.
+-(Mainly UE) Camera far Clip, for when having a large object to move into unreal
 
-Export Panel: Allows you to set your export position target and export with a single button click.
+-Export Panel, place your postion target and export with a button
 
-Exporting with Position Reset: Export objects with the option to reset their positions to 0,0,0, which is helpful for ensuring aligned models during the export process.
+-Exporting with the optison to move everything to 0,0,0 , Helps with having lined up models that needs to be moved to world origin in Export Proccess
 
-Add End Names: Provides a text input box for easily adding end names to objects.
+-Add End names with a Text Input box
 
-Future Plans
+# Plans
 
-Document Ops: Display descriptions of operations when hovering over buttons.
+-Document Ops (Shows what the button does when you hover your mouse)
 
-Error Messages: Implement error messages for missing operations.
+-Error Messages as they are missing
 
-Optional NFS BB Modding Setup: Include optional panels for setting up cars for NFS BB modding.
+-An optional set of panels for setting up your car to export for NFS BB modding
