@@ -21,4 +21,4 @@ Blender-Car-Streamliner is a Blender addon designed to simplify the process of s
 - **Optional Panels**: Add optional panels for setting up cars for NFS BB modding.
 
 ## Contributing
-- **Feel free to fork**: this repository and start working on your contributions right away! You don't need to contact us beforehand. After you've made your changes, we encourage you to communicate with us so we can review and potentially merge your work into the main branch, making it available to everyone. We appreciate your contributions!
+- **Feel free to fork**: this repository and start working on your contributions. You don't needo or have to contact me beforehand. After you've made your changes, i do encourage  to communicate with me so i can review and potentially merge your work into the main branch, making it available to everyone. I appreciate any and everyone contributions!
