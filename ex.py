@@ -34,6 +34,18 @@ class VIEW3D_PT_PanelExportAll(bpy.types.Panel):
     bl_context = "objectmode"
     bl_order = 7
 
+class VIEW3D_PT_PanelExportAll(bpy.types.Panel):
+    bl_label = "Export panel"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = "ExportToUE"
+    bl_context = "objectmode"
+    bl_order = 7
+
+    @classmethod
+    def poll(cls, context):
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
+        return preferences.show_Export_panel
 
     def draw(self, context):
         layout = self.layout
@@ -73,6 +85,15 @@ class OBJECT_OT_ExportZeroPos(bpy.types.Operator):
             obj.location = (0, 0, 0)
         export_all(context.scene.my_tool.path)
         self.report({'INFO'}, 'Exported at Zero Position')
+        return {'FINISHED'}
+
+class MyUnitScale(bpy.types.Operator):
+    """Sets the scale of world to correct scale to export to unreal"""
+    bl_idname = "my_operator.my_unitscale_operator"
+    bl_label = "Set Unit Scale"
+    
+    def execute(self, context):    
+        bpy.context.scene.unit_settings.scale_length = 0.01
         return {'FINISHED'}
 
 class OBJECT_OT_CombinedExporter(bpy.types.Operator):
@@ -178,7 +199,8 @@ classes = (
     OBJECT_OT_CombinedExporter,
     OBJECT_OT_ExportZeroPos,
     OBJECT_OT_CombinedExportZeroPos,
-    MySettings
+    MySettings,
+    MyUnitScale
 )
 
 def register():

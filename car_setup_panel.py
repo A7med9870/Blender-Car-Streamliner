@@ -47,12 +47,12 @@ class OBJECT_PT_car_setup(bpy.types.Panel):
     bl_idname = "OBJECT_PT_car_setup"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'UE5CS'
+    bl_category = 'CS'
     bl_order = 5
 
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['UE_Car_Streamliner'].preferences
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
         return preferences.show_CarS_panel
 
     def draw(self, context):

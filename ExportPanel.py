@@ -14,11 +14,11 @@ class VIEW3D_PT_my_Export_panel(bpy.types.Panel):
     
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['UE_Car_Streamliner'].preferences
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
         return preferences.show_Export_panel
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['UE_Car_Streamliner'].preferences
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
         return not preferences.Disable_Export_force
 
 
@@ -55,11 +55,11 @@ class VIEW3D_PT_my_Export_panel2(bpy.types.Panel):
     
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['UE_Car_Streamliner'].preferences
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
         return preferences.show_Export_panel
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['UE_Car_Streamliner'].preferences
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
         return preferences.Disable_Export_force
 
 

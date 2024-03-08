@@ -9,7 +9,7 @@ class VIEW3D_PT_A7med_Tips(bpy.types.Panel):
 
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['UE_Car_Streamliner'].preferences
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
         return preferences.show_tips_panel
 
     def draw(self, context):

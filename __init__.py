@@ -1,9 +1,9 @@
 bl_info = {
-    "name" : "UE Car Streamliner",
+    "name" : "Car Streamliner",
     "author" : "A7med9870",
     "description" : "Helps with building a car with right scale and settings for unreal engine",
     "blender" : (4, 0, 0),
-    "version" : (0, 0, 6),
+    "version" : (0, 0, 7),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -17,7 +17,7 @@ from . import Referencetab
 from . import MeshMenipli
 from . import wheels_support
 from . import positions_support_panel
-from . import ExportPanel
+#from . import ExportPanel this will be fully removed in future
 from . import CameraPanel
 from . import TipsPanel
 from . import Renamer
@@ -118,11 +118,11 @@ def register():
     MeshMenipli.register()
     wheels_support.register()
     positions_support_panel.register()
-    ExportPanel.register()
     CameraPanel.register()
     TipsPanel.register()
     Renamer.register()
     ex.register()
+#    ExportPanel.register()
 
 def unregister():
     bpy.utils.unregister_class(UECarStreamlinerPreferences)
@@ -131,11 +131,11 @@ def unregister():
     MeshMenipli.unregister()
     wheels_support.unregister()
     positions_support_panel.unregister()
-    ExportPanel.unregister()
     CameraPanel.unregister()
     TipsPanel.unregister()
     Renamer.unregister()
     ex.unregister()
+#    ExportPanel.unregister()
 
 
 if __name__ == "__main__":

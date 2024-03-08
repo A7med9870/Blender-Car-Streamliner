@@ -16,7 +16,7 @@ class VIEW3D_PT_Camera_support_panel(bpy.types.Panel):
     
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['UE_Car_Streamliner'].preferences
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
         return preferences.show_Camera_panel
 
     def draw(self, context):
