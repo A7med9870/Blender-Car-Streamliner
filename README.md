@@ -1,31 +1,24 @@
 # Blender-Car-Streamliner
 
-A blender addon for helping with Seting up your car, either modding or Exporting into unreal engine
-Was orignaly some blender scripts i used to run a lot, turned into an addon
+Blender-Car-Streamliner is a Blender addon designed to simplify the process of setting up cars for modding or exporting into Unreal Engine. Originally a set of Blender scripts, it has been converted into an addon for easier use.
 
-# Features are
--(Only UE at the momment) Refernces box for your vehicle
+## Features
 
--Cut and Mirror with 2 clicks (For outside modeling)
+- **References Box**: Provides a references box for your vehicle (currently only for Unreal Engine).
+- **Cut and Mirror**: Allows for easy cutting and mirroring with just 2 clicks, especially useful for exterior modeling.
+- **Origin Manipulation**: Helps beginners manipulate the origin of objects.
+- **Move Objects to 0,0,0**: Moves selected objects to the origin.
+- **Car Parenting Setup**: Sets up car parenting (for Unreal Engine) with the ability to add custom parts.
+- **Camera Far Clip Adjustment**: Adjusts the camera far clip for large objects being moved into Unreal Engine.
+- **Export Panel**: Provides a panel to set your position target and export with a button.
+- **Exporting with Options**: Allows exporting with the option to move everything to 0,0,0, useful for aligning models for export.
+- **Add End Names**: Includes a text input box for adding end names.
 
--Origin Maniplation (For begginers mainly)
+## Plans
 
--Move Object(s) to 0,0,0
+- **Document Ops**: Display information about button functions when hovering the mouse over them.
+- **Error Messages**: Include error messages for missing functionalities.
+- **Optional Panels**: Add optional panels for setting up cars for NFS BB modding.
 
--(Only UE) Car Pararenting setup with abliy to add custom parts
-
--(Mainly UE) Camera far Clip, for when having a large object to move into unreal
-
--Export Panel, place your postion target and export with a button
-
--Exporting with the optison to move everything to 0,0,0 , Helps with having lined up models that needs to be moved to world origin in Export Proccess
-
--Add End names with a Text Input box
-
-# Plans
-
--Document Ops (Shows what the button does when you hover your mouse)
-
--Error Messages as they are missing
-
--An optional set of panels for setting up your car to export for NFS BB modding
+## Contributing
+Feel Free to fork, without having to contact beforehand; with later some commancation, i may port it into the main branch for everyone to your part
