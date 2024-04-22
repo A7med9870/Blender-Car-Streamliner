@@ -16,16 +16,15 @@ class VIEW3D_PT_my_Export_panel(bpy.types.Panel):
     def poll(cls, context):
         preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
         return preferences.show_Export_panel
-    @classmethod
-    def poll(cls, context):
-        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
-        return not preferences.Disable_Export_force
-
-
+    #@classmethod
+    #def poll(cls, context):
+    #    preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
+    #    return not preferences.Disable_Export_force
     def draw(self, context):
         layout = self.layout
         scn = context.scene
         scene = context.scene
+        layout.label(text="By polycosm")
         layout.label(text="By polycosm")
         layout.label(text="Export Path Location:", icon='EXPORT')
         layout.prop(scn.my_tool, "path", text="")
