@@ -1,9 +1,9 @@
 bl_info = {
-    "name" : "Car Streamliner",
+    "name" : "Car Streamliner git",
     "author" : "A7med9870",
     "description" : "Helps with building a car with right scale and settings for unreal engine",
-    "blender" : (4, 0, 0),
-    "version" : (0, 0, 7),
+    "blender" : (4, 1, 0),
+    "version" : (0, 0, 8),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -60,14 +60,20 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         default=True,
         update=lambda self, context: context.area.tag_redraw(),
     )
+    show_ExtraName_panel: bpy.props.BoolProperty(
+    name="Show ExtraName Panel",
+    description="Toggle visibility of the ExtraName Panel",
+    default=True,
+    update=lambda self, context: context.area.tag_redraw(),
+    )
     dropdown_enum1: EnumProperty(
         name="Reference Tab",
         description="For more compactily",
         items=[
             ("OPTION1", "4.0", "Description for Option 1"),
-            ("OPTION2", "3.6", "Description for Option 2"),
+            ("OPTION2", "3.6 & 4.1", "Description for Option 2"),
         ],
-        default="OPTION1"
+        default="OPTION2"
     )
     documentation_url: bpy.props.StringProperty(
         name="Documentation URL",
@@ -95,11 +101,14 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         row.prop(self, "show_Export_panel")
         row.prop(self, "Disable_Export_force")
 
-        layout.prop(self, "show_CarS_panel")
+        row = layout.row()
+        row.prop(self, "show_CarS_panel")
+        row.prop(self, "show_ExtraName_panel")
+
         layout.prop(self, "dropdown_enum1")
         
         row = layout.row()
-        row.operator("wm.url_open", text="Documentation").url = self.documentation_url
+        row.operator("wm.url_open", text="Github").url = self.documentation_url
         row.operator("wm.url_open", text="Creator's Youtube").url = self.YT_url
         row.operator("wm.url_open", text="Creator's Instagram").url = self.IG_url
 
@@ -107,9 +116,6 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         import webbrowser
         webbrowser.open(self.documentation_url)
         return {'FINISHED'}
-
-        
-
 
 def register():
     bpy.utils.register_class(UECarStreamlinerPreferences)
