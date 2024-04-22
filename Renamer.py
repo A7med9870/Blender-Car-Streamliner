@@ -18,7 +18,10 @@ class OBJECT_PT_add_text_panel(bpy.types.Panel):
     bl_category = 'UE5CS'
     bl_order = 9
 
-
+    @classmethod
+    def poll(cls, context):
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
+        return preferences.show_ExtraName_panel
     def draw(self, context):
         layout = self.layout
         row = layout.row()
