@@ -1,7 +1,7 @@
 bl_info = {
-    "name" : "Car Streamliner git",
+    "name" : "Car Streamliner",
     "author" : "A7med9870",
-    "description" : "Helps with building a car with right scale and settings for unreal engine",
+    "description" : "Offers tools to start making your cars faster",
     "blender" : (4, 1, 0),
     "version" : (0, 0, 8),
     "location" : "View3D",
@@ -72,6 +72,7 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         items=[
             ("OPTION1", "4.0", "Description for Option 1"),
             ("OPTION2", "3.6 & 4.1", "Description for Option 2"),
+            ("OPTION3", "Off", "Disable Reference Panel"),
         ],
         default="OPTION2"
     )
@@ -108,7 +109,7 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         layout.prop(self, "dropdown_enum1")
         
         row = layout.row()
-        row.operator("wm.url_open", text="Github").url = self.documentation_url
+        row.operator("wm.url_open", text="Github Page").url = self.documentation_url
         row.operator("wm.url_open", text="Creator's Youtube").url = self.YT_url
         row.operator("wm.url_open", text="Creator's Instagram").url = self.IG_url
 

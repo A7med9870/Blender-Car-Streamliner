@@ -1,6 +1,6 @@
 # Blender-Car-Streamliner
 
-Blender-Car-Streamliner is a Blender addon designed to simplify the process of setting up cars for modding or exporting into Unreal Engine. Originally a set of Blender scripts, it has been converted into an addon for easier use.
+Blender-Car-Streamliner is a Blender addon designed to simplify the process of setting up cars for modfiying or exporting into Unreal Engine. Originally was a set of Blender scripts i used a ton, it has been converted into an addon for easier use and is public so anyone can benfit from.
 
 ## Features
 
@@ -16,7 +16,7 @@ Blender-Car-Streamliner is a Blender addon designed to simplify the process of s
 - **Exporting with Options**: Allows exporting with the option to move everything to 0,0,0, useful for aligning models for export.
 - **Add End Names**: Includes a text input box for adding end names.
 
-## Plans
+## Plans For Future
 
 - **Document Ops**: Display information about button functions when hovering the mouse over them.
 - **Error Messages**: Include error messages for missing functionalities.

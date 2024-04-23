@@ -7,7 +7,7 @@ class AddTextToObjectNameOperator(bpy.types.Operator):
     def execute(self, context):
         text_to_add = context.scene.text_to_add
         for obj in context.selected_objects:
-            obj.name += "_" + text_to_add
+            obj.name += "" + text_to_add
         return {'FINISHED'}
 
 class OBJECT_PT_add_text_panel(bpy.types.Panel):
@@ -25,7 +25,9 @@ class OBJECT_PT_add_text_panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         row = layout.row()
-        row.label(text="Add text to selected object(s) name:")
+        row.label(text="Add text to selected")
+        row = layout.row()
+        row.label(text="object(s) name:")
         row = layout.row()
         row.prop(context.scene, "text_to_add")
         row = layout.row()

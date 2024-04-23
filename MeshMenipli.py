@@ -89,7 +89,7 @@ class MyCutOperatorNeg(bpy.types.Operator):
 class MyMirrorOperator(bpy.types.Operator):
     """adds Mirror modifier"""
     bl_idname = "my_operator.my_mirror_operator"
-    bl_label = "Add Mirror Modifier Along Y"
+    bl_label = "Add Mirror Y"
 
     def execute(self, context):    
         # Get the last selected object
@@ -109,7 +109,7 @@ class MyMirrorOperator(bpy.types.Operator):
 class MyDecimateOperator(bpy.types.Operator):
     """Operator to add Decimate modifier"""
     bl_idname = "my_operator.my_decimate_operator"
-    bl_label = "Add Decimate Modifier"
+    bl_label = "Add Modifier"
 
     def execute(self, context):
         # Get the last selected object
