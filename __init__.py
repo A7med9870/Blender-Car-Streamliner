@@ -61,10 +61,10 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         update=lambda self, context: context.area.tag_redraw(),
     )
     show_ExtraName_panel: bpy.props.BoolProperty(
-    name="Show ExtraName Panel",
-    description="Toggle visibility of the ExtraName Panel",
-    default=True,
-    update=lambda self, context: context.area.tag_redraw(),
+        name="Show ExtraName Panel",
+        description="Toggle visibility of the ExtraName Panel",
+        default=False,
+        update=lambda self, context: context.area.tag_redraw(),
     )
     dropdown_enum1: EnumProperty(
         name="Reference Tab",
