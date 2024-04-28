@@ -3,7 +3,7 @@ bl_info = {
     "author" : "A7med9870",
     "description" : "Offers tools to start making your cars faster",
     "blender" : (4, 1, 0),
-    "version" : (0, 0, 8),
+    "version" : (0, 0, 9),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -12,18 +12,18 @@ bl_info = {
 import bpy
 from bpy.types import Panel, AddonPreferences
 from bpy.props import BoolProperty, EnumProperty
-from . import car_setup_panel
-from . import Referencetab
+from . import car_setup_panel           #The set up part, where your car parts get attached to the main body, for later to load in unreal
+from . import Referencetab              #
 from . import MeshMenipli
 from . import wheels_support
 from . import positions_support_panel
-#from . import ExportPanel this will be fully removed in future
 from . import CameraPanel
 from . import TipsPanel
 from . import Renamer
 try:
     # Load another Blender file
     from . import ex
+    from . import ExportPanel #this will be fully removed in future
 except Exception as e:
     print("Error loading file:", e)
     
@@ -43,8 +43,8 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         update=lambda self, context: context.area.tag_redraw(),
     )
     show_Export_panel: bpy.props.BoolProperty(
-        name="Show Export Panel",
-        description="Toggle visibility of the Export Panel",
+        name="Show Export to FBX Panel",
+        description="Toggle visibility of the Export to FBX Panel",
         default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
@@ -66,15 +66,25 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
-    dropdown_enum1: EnumProperty(
+    CarRefenceCarRefencedropdown_enum1: EnumProperty(
         name="Reference Tab",
         description="For more compactily",
         items=[
-            ("OPTION1", "4.0", "Description for Option 1"),
-            ("OPTION2", "3.6 & 4.1", "Description for Option 2"),
+            ("OPTION1", "4.0 UE4/5", "Description for Option 1"),
+            ("OPTION2", "3.6 & 4.1 UE4/5", "Description for Option 2"),
             ("OPTION3", "Off", "Disable Reference Panel"),
         ],
         default="OPTION2"
+    )
+    FBXEdropdown_enum1: EnumProperty(
+        name="Export Tab",
+        description="For Backwords Compaptily",
+        items=[
+            ("OPTION1", "Modern Export", "Description for Option 1"),
+            ("OPTION2", "Old Export", "Description for Option 2"),
+            ("OPTION3", "Off", "Disable Reference Panel"),
+        ],
+        default="OPTION1"
     )
     documentation_url: bpy.props.StringProperty(
         name="Documentation URL",
@@ -106,7 +116,9 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         row.prop(self, "show_CarS_panel")
         row.prop(self, "show_ExtraName_panel")
 
-        layout.prop(self, "dropdown_enum1")
+        layout.prop(self, "CarRefenceCarRefencedropdown_enum1")
+
+        layout.prop(self, "FBXEdropdown_enum1")
         
         row = layout.row()
         row.operator("wm.url_open", text="Github Page").url = self.documentation_url
@@ -129,7 +141,7 @@ def register():
     TipsPanel.register()
     Renamer.register()
     ex.register()
-#    ExportPanel.register()
+    ExportPanel.register()
 
 def unregister():
     bpy.utils.unregister_class(UECarStreamlinerPreferences)
@@ -142,7 +154,7 @@ def unregister():
     TipsPanel.unregister()
     Renamer.unregister()
     ex.unregister()
-#    ExportPanel.unregister()
+    ExportPanel.unregister()
 
 
 if __name__ == "__main__":

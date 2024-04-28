@@ -6,20 +6,16 @@ from bpy.props import (StringProperty, PointerProperty, EnumProperty, BoolProper
 from bpy.types import (Panel, Operator, AddonPreferences, PropertyGroup)
 
 class VIEW3D_PT_my_Export_panel(bpy.types.Panel):
-    bl_label = "Export Panel"
+    bl_label = "Export panel"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
-    bl_category = "UE5CS"
+    bl_category = "ExportToUE"
+    bl_context = "objectmode"
     bl_order = 7
-    
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
-        return preferences.show_Export_panel
-    #@classmethod
-    #def poll(cls, context):
-    #    preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
-    #    return not preferences.Disable_Export_force
+        preferences = bpy.context.preferences.addons['Blender-Car-Streamliner'].preferences
+        return preferences.FBXEdropdown_enum1 == "OPTION2"
     def draw(self, context):
         layout = self.layout
         scn = context.scene
@@ -51,17 +47,10 @@ class VIEW3D_PT_my_Export_panel2(bpy.types.Panel):
     bl_region_type = "UI"
     bl_category = "UE5CS"
     bl_order = 7
-    
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
-        return preferences.show_Export_panel
-    @classmethod
-    def poll(cls, context):
-        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
-        return preferences.Disable_Export_force
-
-
+        preferences = bpy.context.preferences.addons['Blender-Car-Streamliner'].preferences
+        return preferences.FBXEdropdown_enum1 == "OPTION2"
     def draw(self, context):
         layout = self.layout
         scn = context.scene

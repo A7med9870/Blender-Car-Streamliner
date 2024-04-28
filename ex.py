@@ -34,19 +34,14 @@ class VIEW3D_PT_PanelExportAll(bpy.types.Panel):
     bl_context = "objectmode"
     bl_order = 7
 
-class VIEW3D_PT_PanelExportAll(bpy.types.Panel):
-    bl_label = "Export panel"
-    bl_space_type = "VIEW_3D"
-    bl_region_type = "UI"
-    bl_category = "ExportToUE"
-    bl_context = "objectmode"
-    bl_order = 7
-
+  #  @classmethod
+  #  def poll(cls, context):
+ #       preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
+#        return preferences.show_Export_panel
     @classmethod
     def poll(cls, context):
-        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
-        return preferences.show_Export_panel
-
+        preferences = bpy.context.preferences.addons['Blender-Car-Streamliner'].preferences
+        return preferences.FBXEdropdown_enum1 == "OPTION1"
     def draw(self, context):
         layout = self.layout
         scn = context.scene

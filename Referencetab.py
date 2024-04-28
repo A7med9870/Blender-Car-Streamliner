@@ -12,7 +12,7 @@ class VIEW3D_PT_my_References_panel(bpy.types.Panel):
     @classmethod
     def poll(cls, context):
         preferences = bpy.context.preferences.addons['Blender-Car-Streamliner'].preferences
-        return preferences.dropdown_enum1 == "OPTION1"
+        return preferences.CarRefenceCarRefencedropdown_enum1 == "OPTION1"
     def draw(self, context):
         """Defines the layout of the panel"""
         layout = self.layout
@@ -39,7 +39,7 @@ class VIEW3D_PT_my_References_panel36(bpy.types.Panel):
     @classmethod
     def poll(cls, context):
         preferences = bpy.context.preferences.addons['Blender-Car-Streamliner'].preferences
-        return preferences.dropdown_enum1 == "OPTION2"
+        return preferences.CarRefenceCarRefencedropdown_enum1 == "OPTION2"
     def draw(self, context):
         """Defines the layout of the panel"""
         layout = self.layout
