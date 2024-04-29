@@ -13,13 +13,13 @@ import bpy
 from bpy.types import Panel, AddonPreferences
 from bpy.props import BoolProperty, EnumProperty
 from . import car_setup_panel           #The set up part, where your car parts get attached to the main body, for later to load in unreal
-from . import Referencetab              #
-from . import MeshMenipli
-from . import wheels_support
-from . import positions_support_panel
-from . import CameraPanel
-from . import TipsPanel
-from . import Renamer
+from . import Referencetab              #Spawns the box and wheels for the user to reference their car into the right scale for Unreal Engine
+from . import MeshMenipli               #Some actions that i keep using a lot
+from . import wheels_support            #Mainly for beginners, but make it faster to fix your wheels into unreal
+from . import positions_support_panel   #s
+from . import CameraPanel               #Increases the view distance, as it's too low when you scale everything up
+from . import TipsPanel                 #This might get removed in future, in older versions; it was more completed form
+from . import Renamer                   #Very early in development, will help adding a list of text added to the names of existing objects; mainly made to nfs modding
 try:
     # Load another Blender file
     from . import ex
