@@ -1,5 +1,5 @@
 bl_info = {
-    "name" : "UE Car modeling Helper",
+    "name" : "(old and please dont use)UE Car modeling Helper",
     "author" : "A7med9870",
     "description" : "Helps with building a car with right scale and settings for unreal engine",
     "blender" : (4, 0, 0),
@@ -28,13 +28,10 @@ def cut_mirror_and_decimate():
     # Switch to Edit mode
     bpy.context.view_layer.objects.active = obj
     bpy.ops.object.mode_set(mode='EDIT')
-
     # Select all vertices
     bpy.ops.mesh.select_all(action='SELECT')
-
     # Cut the object along the X axis
     bpy.ops.mesh.bisect(plane_co=(0, 0, 0), plane_no=(0, 1, 0), clear_inner=True)
-
     # Switch back to Object mode
     bpy.ops.object.mode_set(mode='OBJECT')
 
@@ -45,7 +42,6 @@ def add_mirror_modifier():
         obj = selected_objects[-1]
     else:
         return  # No selected object
-
     # Add Mirror modifier with Y-axis mirror
     mirror_modifier = obj.modifiers.new(name="Mirror", type='MIRROR')
     mirror_modifier.use_axis[1] = True
@@ -373,7 +369,6 @@ class MySeparateBumperSelected(bpy.types.Operator):
 
         # Separate by selection
         bpy.ops.mesh.separate(type='SELECTED')
-
         # Rename the new object
         new_obj = bpy.context.active_object
         new_obj.name = obj.name + "_FrontBumper"
@@ -457,12 +452,6 @@ class MyTiresReference(bpy.types.Operator):
         bpy.ops.mesh.separate(type='LOOSE')
         bpy.ops.object.editmode_toggle()
         bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')
-
-
-
-
-
-
         return {'FINISHED'}
 
 class MyUnitScale(bpy.types.Operator):
@@ -496,18 +485,13 @@ class MyCarReferenceOperator(bpy.types.Operator):
         # Create a new mesh object (a box)
         bpy.ops.mesh.primitive_cube_add(size=2)
         bpy.context.object.name = "Car_Refernce"
-
-
         # Get the active object (the newly created box)
         obj = bpy.context.active_object
-
         # Enter edit mode
         bpy.ops.object.mode_set(mode='EDIT')
-
         # Get the mesh data of the object
         mesh = obj.data
         bm = bmesh.from_edit_mesh(mesh)
-
         # Deselect all faces
         for f in bm.faces:
             f.select = False
@@ -528,8 +512,6 @@ class MyCarReferenceOperator(bpy.types.Operator):
 
         # Apply the selection
         bmesh.update_edit_mesh(mesh)
-        
-        
         bpy.ops.mesh.loopcut_slide(MESH_OT_loopcut={"number_cuts":1, "smoothness":0, "falloff":'INVERSE_SQUARE', "object_index":0, "edge_index":5, "mesh_select_mode_init":(False, True, False)}, TRANSFORM_OT_edge_slide={"value":0, "single_side":False, "use_even":False, "flipped":False, "use_clamp":True, "mirror":True, "snap":False, "snap_elements":{'INCREMENT'}, "use_snap_project":False, "snap_target":'CLOSEST', "use_snap_self":True, "use_snap_edit":True, "use_snap_nonedit":True, "use_snap_selectable":False, "snap_point":(0, 0, 0), "correct_uv":True, "release_confirm":False, "use_accurate":False, "alt_navigation":False})
         bpy.ops.transform.edge_slide(value=0.380081, mirror=True, snap=False, snap_elements={'INCREMENT'}, use_snap_project=False, snap_target='CLOSEST', use_snap_self=True, use_snap_edit=True, use_snap_nonedit=True, use_snap_selectable=False, correct_uv=True, alt_navigation=True)
         bpy.ops.transform.translate(value=(0, 0, 0.290866), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False, snap=False, snap_elements={'INCREMENT'}, use_snap_project=False, snap_target='CLOSEST', use_snap_self=True, use_snap_edit=True, use_snap_nonedit=True, use_snap_selectable=False, alt_navigation=True)
@@ -537,12 +519,8 @@ class MyCarReferenceOperator(bpy.types.Operator):
         bpy.ops.transform.translate(value=(0, 0, 100.14405), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False, snap=False, snap_elements={'INCREMENT'}, use_snap_project=False, snap_target='CLOSEST', use_snap_self=True, use_snap_edit=True, use_snap_nonedit=True, use_snap_selectable=False, alt_navigation=True)
         bpy.ops.object.modifier_add(type='WIREFRAME')
         bpy.context.object.modifiers["Wireframe"].thickness = 1
-
-
-
         # Return to object mode
         bpy.ops.object.mode_set(mode='OBJECT')
-
         # Scale the entire object by 0.2 on the Y-axis
         bpy.ops.object.select_all(action='DESELECT')  # Deselect all objects
         obj.select_set(True)  # Select the current object
@@ -568,7 +546,7 @@ class MySettings(PropertyGroup):
                 ('OP3', "_low", "adds _low for baking in Substance Painter"),
                ]
         )
-        
+    
     apply_bool: BoolProperty(
         name="Export Object's Origin?",
         description="Whether to use the objects origin as the export origin",
