@@ -94,7 +94,7 @@ class MyTiresReference(bpy.types.Operator):
 class MyUnitScale(bpy.types.Operator):
     """Sets the scale of world to correct scale to export to unreal"""
     bl_idname = "my_operator.my_unitscale_operator"
-    bl_label = "Set Unit Scale (For UE)"
+    bl_label = "Set Unit Scale"
     def execute(self, context):    
         bpy.context.scene.unit_settings.scale_length = 0.01
         return {'FINISHED'}

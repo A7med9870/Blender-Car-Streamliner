@@ -3,7 +3,7 @@ bl_info = {
     "author" : "A7med9870",
     "description" : "Offers tools to start making your cars faster",
     "blender" : (4, 1, 0),
-    "version" : (0, 0, 9),
+    "version" : (0, 1, 0),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -26,7 +26,7 @@ try:
     from . import ExportPanel #this will be fully removed in future
 except Exception as e:
     print("Error loading file:", e)
-    
+
 class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
     bl_idname = __name__
 
@@ -119,7 +119,7 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         layout.prop(self, "CarRefenceCarRefencedropdown_enum1")
 
         layout.prop(self, "FBXEdropdown_enum1")
-        
+
         row = layout.row()
         row.operator("wm.url_open", text="Github Page").url = self.documentation_url
         row.operator("wm.url_open", text="Creator's Youtube").url = self.YT_url

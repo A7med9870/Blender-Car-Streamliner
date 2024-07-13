@@ -5,7 +5,7 @@ from mathutils import Vector
 from bpy.props import (StringProperty, PointerProperty, EnumProperty, BoolProperty)
 from bpy.types import (Panel, Operator, AddonPreferences, PropertyGroup)
 
-class VIEW3D_PT_my_Export_panel(bpy.types.Panel):
+class hamdacars_old_Export_panel(bpy.types.Panel):
     bl_label = "Export panel"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
@@ -21,27 +21,26 @@ class VIEW3D_PT_my_Export_panel(bpy.types.Panel):
         scn = context.scene
         scene = context.scene
         layout.label(text="By polycosm")
-        layout.label(text="By polycosm")
         layout.label(text="Export Path Location:", icon='EXPORT')
         layout.prop(scn.my_tool, "path", text="")
         layout.label(text="UNCHECK RELATIVE PATH")
         layout.label(text="IN TOP RIGHT SIDE", icon='PREFERENCES')
-        
+
         if scene.unit_settings.scale_length == 0.009999999776482582:
             layout.operator("myops.combined_exporter", text='Export Only Selected', icon='TRIA_RIGHT')
         elif scene.unit_settings.scale_length == 1:
-            layout.label(text="EXPORT BUTTON WILL") 
+            layout.label(text="EXPORT BUTTON WILL")
             layout.label(text="SHOW UP IF YOU")
             layout.label(text="SET PRESS UNIT SCALE")
             layout.operator("my_operator.my_unitscale_operator", icon='IMAGE_BACKGROUND')
         elif scene.unit_settings.scale_length != 0.009999999776482582 and scene.unit_settings.scale_length != 1:
             # This block will only execute if neither of the above conditions are true
-            layout.label(text="EXPORT BUTTON WILL") 
+            layout.label(text="EXPORT BUTTON WILL")
             layout.label(text="SHOW UP IF YOU")
             layout.label(text="SET PRESS UNIT SCALE")
-            layout.operator("my_operator.my_unitscale_operator", icon='IMAGE_BACKGROUND')        
+            layout.operator("my_operator.my_unitscale_operator", icon='IMAGE_BACKGROUND')
 
-class VIEW3D_PT_my_Export_panel2(bpy.types.Panel):
+class hamdacars_old_Export_panel2(bpy.types.Panel):
     bl_label = "Export Panel"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
@@ -63,12 +62,12 @@ class VIEW3D_PT_my_Export_panel2(bpy.types.Panel):
         layout.operator("myops.combined_exporter", text='Export Only Selected', icon='TRIA_RIGHT')
 
 
-class MyUnitScale(bpy.types.Operator):
+class hamdacars_old_UnitScale(bpy.types.Operator):
     """Sets the scale of world to correct scale to export to unreal"""
     bl_idname = "my_operator.my_unitscale_operator"
     bl_label = "Set Unit Scale"
-    
-    def execute(self, context):    
+
+    def execute(self, context):
         bpy.context.scene.unit_settings.scale_length = 0.01
         return {'FINISHED'}
 
@@ -80,7 +79,7 @@ class MySettings(PropertyGroup):
         #default="",
         maxlen=1024,
         subtype='FILE_PATH')
-        
+
     suffix_enum: EnumProperty(
         name="Dropdown:",
         description="Apply Data to attribute.",
@@ -89,18 +88,18 @@ class MySettings(PropertyGroup):
                 ('OP3', "_low", "adds _low for baking in Substance Painter"),
                ]
         )
-        
+
     apply_bool: BoolProperty(
         name="Export Object's Origin?",
         description="Whether to use the objects origin as the export origin",
         default = False
         )
-        
-def exportCombined(exportFolder, suffix=''):
-    isOrigin = bpy.context.scene.my_tool.apply_bool 
+
+def hamdacars_old_exportCombined(exportFolder, suffix=''):
+    isOrigin = bpy.context.scene.my_tool.apply_bool
     objects = bpy.context.selected_objects
     origLocs = []
-        
+
     for object in objects:
         if isOrigin:
             origLocs.append(object.location.copy())
@@ -109,14 +108,14 @@ def exportCombined(exportFolder, suffix=''):
 
     exportName = exportFolder + bpy.context.active_object.name + '.fbx'
     bpy.ops.export_scene.fbx(filepath=exportName, use_selection=True, mesh_smooth_type='FACE')
-    
-    for object in objects:  
+
+    for object in objects:
         if isOrigin:
             object.location = origLocs.pop(0)
         if not suffix is '':
             object.name = object.name[:-(len(suffix))]
 
-class OBJECT_OT_CombinedExporter(bpy.types.Operator):
+class hamdacars_old_CombinedExporter(bpy.types.Operator):
     """Export what you have Selected as of now, Don't forget the armture"""
     bl_idname = "myops.combined_exporter"
     bl_label = "Export Selected"
@@ -126,14 +125,14 @@ class OBJECT_OT_CombinedExporter(bpy.types.Operator):
         return {'FINISHED'}
 
     def invoke(self, context, event):
-        if context.scene.my_tool.suffix_enum == 'OP1': 
-            exportCombined(context.scene.my_tool.path)    
-        
+        if context.scene.my_tool.suffix_enum == 'OP1':
+            hamdacars_old_exportCombined(context.scene.my_tool.path)
+
         if context.scene.my_tool.suffix_enum == 'OP2':
-            exportCombined(context.scene.my_tool.path, '_high')
-        
+            hamdacars_old_exportCombined(context.scene.my_tool.path, '_high')
+
         if context.scene.my_tool.suffix_enum == 'OP3':
-            exportCombined(context.scene.my_tool.path, '_low')
+            hamdacars_old_exportCombined(context.scene.my_tool.path, '_low')
 
         self.report({'INFO'}, 'Exported')
         return {'FINISHED'}
@@ -147,24 +146,24 @@ class OBJECT_OT_CombinedExporter(bpy.types.Operator):
         return {'FINISHED'}
 
     def invoke(self, context, event):
-        if context.scene.my_tool.suffix_enum == 'OP1': 
-            exportCombined(context.scene.my_tool.path)    
-        
+        if context.scene.my_tool.suffix_enum == 'OP1':
+            hamdacars_old_exportCombined(context.scene.my_tool.path)
+
         if context.scene.my_tool.suffix_enum == 'OP2':
-            exportCombined(context.scene.my_tool.path, '_high')
-        
+            hamdacars_old_exportCombined(context.scene.my_tool.path, '_high')
+
         if context.scene.my_tool.suffix_enum == 'OP3':
-            exportCombined(context.scene.my_tool.path, '_low')
+            hamdacars_old_exportCombined(context.scene.my_tool.path, '_low')
 
         self.report({'INFO'}, 'Exported')
         return {'FINISHED'}
 
 classes = (
-    VIEW3D_PT_my_Export_panel,
-    VIEW3D_PT_my_Export_panel2,
-    MyUnitScale,
+    hamdacars_old_Export_panel,
+    hamdacars_old_Export_panel2,
+    hamdacars_old_UnitScale,
     MySettings,
-    OBJECT_OT_CombinedExporter
+    hamdacars_old_CombinedExporter
 )
 
 def register():
