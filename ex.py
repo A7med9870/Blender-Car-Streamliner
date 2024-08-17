@@ -51,10 +51,9 @@ class hamadacarsPanelExportAll(bpy.types.Panel):
         layout.operator("myops.batch_exporter", text='Export Separate', icon='TRIA_RIGHT')
         layout.operator("myops.export_zero_pos", text='Export Separate at Zero Position', icon='TRIA_RIGHT')
         layout.label(text="")
-        layout.prop(scn.my_tool, "apply_origin", text="Export Object's Origin?")
-        layout.prop(scn.my_tool, "suffix_enum", text="Suffix")
         layout.operator("myops.combined_exporter", text='Export Combined', icon='TRIA_RIGHT')
         layout.operator("myops.combined_export_zero_pos", text='Export Combined at Zero Position', icon='TRIA_RIGHT')
+        layout.operator("object.select_all_and_set_active_main_body", text="Select hole Car parts")
 
 class hamadacarsBatchExport(bpy.types.Operator):
     bl_idname = "myops.batch_exporter"
@@ -132,7 +131,6 @@ class hamadacarsCombinedExportZeroPos(bpy.types.Operator):
         return {'FINISHED'}
 
 def hamadacarsexport_combined(export_folder, suffix=''):
-    is_origin = bpy.context.scene.my_tool.apply_origin
     objects = bpy.context.selected_objects
     orig_locs = []
 
@@ -149,7 +147,6 @@ def hamadacarsexport_combined(export_folder, suffix=''):
             obj.name = obj.name[:-len(suffix)]
 
 def hamadacarsexport_combinedZero(export_folder, suffix=''):
-    is_origin = bpy.context.scene.my_tool.apply_origin
     objects = bpy.context.selected_objects
     orig_locs = []
 

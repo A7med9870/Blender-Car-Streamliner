@@ -9,10 +9,10 @@ from bpy.types import (Panel, Operator, AddonPreferences, PropertyGroup)
 class SelectCarObjectsOperator(bpy.types.Operator):
     bl_idname = "object.select_car_objects"
     bl_label = "Select Car Objects"
-
+    
     def execute(self, context):
         main_car_body = context.scene.main_car_body_object
-
+        
         # Parent the car wheels to the main car body
         for i in range(4):
             wheel_object = getattr(context.scene, f"car_wheel_{i+1}_object", None)
@@ -29,7 +29,7 @@ class SelectCarObjectsOperator(bpy.types.Operator):
                     wheel_object.name = "RL"
                 elif i == 3:
                     wheel_object.name = "RR"
-
+        
         # Parent the extra car parts to the main car body
         if hasattr(context.scene, "extra_car_parts"):
             for part in context.scene.extra_car_parts:
@@ -40,10 +40,8 @@ class SelectCarObjectsOperator(bpy.types.Operator):
                     bpy.ops.object.parent_set(type='OBJECT', keep_transform=True)
                     # Rename the extra car part
                     part_obj.name = part.name
-
+        
         return {'FINISHED'}
-
-
 class OBJECT_PT_car_setup(bpy.types.Panel):
     bl_label = "Car Setup"
     bl_idname = "OBJECT_PT_car_setup"
@@ -59,7 +57,7 @@ class OBJECT_PT_car_setup(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-
+        
         # Main Car Body Selector
         layout.label(text="Main Car Body:")
         row = layout.row()
@@ -84,20 +82,15 @@ class OBJECT_PT_car_setup(bpy.types.Panel):
                 row.prop_search(part, "object", bpy.data, "objects", text="")
                 row.operator("object.select_extra_car_part_object", text="", icon='RESTRICT_SELECT_OFF').index = index
                 row.operator("object.remove_car_part_extra", text="", icon='X').index = index
-
+        
         # Add Extra Car Parts Button
         layout.operator("object.add_car_part_extra", text="Add Extra Car Part", icon='PLUS')
-
+        
         # Set Vehicle Up Button
         layout.operator("object.select_car_objects", text="Set Vehicle Up", icon='HAND')
-
+        
         # Select All Added Objects Button
         layout.operator("object.select_all_added_objects", text="Select All Added Objects")
-        #layout.operator("object.animate_rotate_wheels_y_axis", text="Animate Rotate Wheels Y-Axis")
-        layout.operator("object.animate_rotate_front_wheels_right", text="Test Animation")
-        #layout.operator("object.animate_rotate_front_wheels_left", text="Animate Rotate Front Wheels Left")
-        layout.operator("object.select_all_and_set_active_main_body", text="Select hole Car parts")
-
 
 
 class SelectExtraCarPartObjectOperator(bpy.types.Operator):
@@ -120,7 +113,6 @@ class SelectMainCarBodyOperator(bpy.types.Operator):
     def execute(self, context):
         main_car_body = context.scene.main_car_body_object
         if main_car_body:
-            bpy.context.view_layer.objects.active = main_car_body
             main_car_body.select_set(True)
         return {'FINISHED'}
 
@@ -141,18 +133,18 @@ class SelectCarWheelOperator(bpy.types.Operator):
 class SelectAllAddedObjectsOperator(bpy.types.Operator):
     bl_idname = "object.select_all_added_objects"
     bl_label = "Select All Added Objects"
-
+    
     def execute(self, context):
         for i in range(4):
             wheel_object = getattr(context.scene, f"car_wheel_{i+1}_object", None)
             if wheel_object:
                 wheel_object.select_set(True)
-
+        
         if hasattr(context.scene, "extra_car_parts"):
             for part in context.scene.extra_car_parts:
                 if part and part.object:
                     part.object.select_set(True)
-
+        
         return {'FINISHED'}
 
 
@@ -165,7 +157,7 @@ class ExtraCarPartProperty(bpy.types.PropertyGroup):
 class AddCarPartExtraOperator(bpy.types.Operator):
     bl_idname = "object.add_car_part_extra"
     bl_label = "Add Extra Car Part"
-
+    
     def execute(self, context):
         if not hasattr(context.scene, "extra_car_parts"):
             bpy.types.Scene.extra_car_parts = bpy.props.CollectionProperty(type=ExtraCarPartProperty)
@@ -184,71 +176,7 @@ class RemoveCarPartExtraOperator(bpy.types.Operator):
         if hasattr(context.scene, "extra_car_parts") and self.index < len(context.scene.extra_car_parts):
             context.scene.extra_car_parts.remove(self.index)
         return {'FINISHED'}
-
-class AnimateRotateFrontWheelsRightOperator(bpy.types.Operator):
-    bl_idname = "object.animate_rotate_front_wheels_right"
-    bl_label = "Animate Rotate Front Wheels Right"
-
-    def execute(self, context):
-        # Rotate all wheels forward
-        for i in range(4):  # All wheels
-            wheel_object = getattr(context.scene, f"car_wheel_{i+1}_object", None)
-            if wheel_object:
-                bpy.context.view_layer.objects.active = wheel_object
-                bpy.ops.object.mode_set(mode='OBJECT')
-                bpy.ops.object.select_all(action='DESELECT')
-                wheel_object.select_set(True)
-
-                # Set initial keyframe
-                wheel_object.rotation_euler = (0, 0, 0)
-                wheel_object.keyframe_insert(data_path="rotation_euler", frame=1)
-
-                # Set forward rotation keyframe
-                wheel_object.rotation_euler = (0, 5.0708, 0)  # Rotate 90 degrees on the Y-axis
-                wheel_object.keyframe_insert(data_path="rotation_euler", frame=50)
-
-        # Rotate front wheels right and left
-        for i in [0, 1]:  # Front left and front right wheels
-            wheel_object = getattr(context.scene, f"car_wheel_{i+1}_object", None)
-            if wheel_object:
-                bpy.context.view_layer.objects.active = wheel_object
-                bpy.ops.object.mode_set(mode='OBJECT')
-                bpy.ops.object.select_all(action='DESELECT')
-                wheel_object.select_set(True)
-
-                # Set nothing rotation keyframe
-                wheel_object.rotation_euler = (0, 1.5708, 0)  # Rotate 45 degrees on the Z-axis
-                wheel_object.keyframe_insert(data_path="rotation_euler", frame=20)
-
-                # Set right rotation keyframe
-                wheel_object.rotation_euler = (0, 1.5708, 0.7854)  # Rotate 45 degrees on the Z-axis
-                wheel_object.keyframe_insert(data_path="rotation_euler", frame=30)
-
-                # Set left rotation keyframe
-                wheel_object.rotation_euler = (0, 3.0708, -0.7854)  # Rotate -45 degrees on the Z-axis
-                wheel_object.keyframe_insert(data_path="rotation_euler", frame=40)
-
-                # Set REST rotation keyframe
-                wheel_object.rotation_euler = (0, 5.0708, 0.0)  # Rotate -45 degrees on the Z-axis
-                wheel_object.keyframe_insert(data_path="rotation_euler", frame=50)
-
-        # Set end frame to 40
-        context.scene.frame_end = 50
-        return {'FINISHED'}
-
-class SelectAllAndSetActiveMainBodyOperator(bpy.types.Operator):
-    bl_idname = "object.select_all_and_set_active_main_body"
-    bl_label = "Select All and Set Active Main Body"
-
-    def execute(self, context):
-        main_car_body = context.scene.main_car_body_object
-        if main_car_body:
-            bpy.ops.object.select_all_added_objects()
-            bpy.context.view_layer.objects.active = main_car_body
-            main_car_body.select_set(True)
-        return {'FINISHED'}
-
-
+   
 def register():
     bpy.utils.register_class(ExtraCarPartProperty)
     bpy.utils.register_class(OBJECT_PT_car_setup)
@@ -259,8 +187,6 @@ def register():
     bpy.utils.register_class(SelectExtraCarPartObjectOperator)
     bpy.utils.register_class(SelectMainCarBodyOperator)
     bpy.utils.register_class(SelectCarWheelOperator)
-    bpy.utils.register_class(SelectAllAndSetActiveMainBodyOperator)
-    bpy.utils.register_class(AnimateRotateFrontWheelsRightOperator)
     bpy.types.Scene.main_car_body_object = bpy.props.PointerProperty(type=bpy.types.Object)
     bpy.types.Scene.car_wheel_1_object = bpy.props.PointerProperty(type=bpy.types.Object)
     bpy.types.Scene.car_wheel_2_object = bpy.props.PointerProperty(type=bpy.types.Object)
@@ -276,8 +202,6 @@ def unregister():
     bpy.utils.unregister_class(AddCarPartExtraOperator)
     bpy.utils.unregister_class(RemoveCarPartExtraOperator)
     bpy.utils.unregister_class(SelectAllAddedObjectsOperator)
-    bpy.utils.unregister_class(SelectAllAndSetActiveMainBodyOperator)
-    bpy.utils.unregister_class(AnimateRotateFrontWheelsRightOperator)
     bpy.utils.unregister_class(SelectExtraCarPartObjectOperator)
 
     del bpy.types.Scene.main_car_body_object
