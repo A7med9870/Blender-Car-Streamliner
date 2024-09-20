@@ -3,7 +3,6 @@ import bpy
 class AddTextToObjectNameOperator(bpy.types.Operator):
     bl_idname = "object.add_text_to_object_name"
     bl_label = "Add Text to Object Name"
-    
     def execute(self, context):
         text_to_add = context.scene.text_to_add
         for obj in context.selected_objects:

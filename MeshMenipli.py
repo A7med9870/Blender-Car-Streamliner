@@ -12,7 +12,7 @@ class VIEW3D_PT_MeshManpltion_panel(bpy.types.Panel):
     bl_label = "Mesh Miniplation"  # Panel label
     bl_category = "UE5CS"
     bl_order = 2
-    
+
     def draw(self, context):
         """Defines the layout of the panel"""
         layout = self.layout
@@ -21,12 +21,11 @@ class VIEW3D_PT_MeshManpltion_panel(bpy.types.Panel):
         row.operator("my_operator.my_cut_operator_neg", icon='PARTICLEMODE')
 
         # Add a button to add Mirror modifier
-        layout.operator("my_operator.my_mirror_operator",icon='MOD_MIRROR')
+        layout.operator("my_operator.my_mirror_operator",icon='MOD_MIRROR', text="Add Mirror on Y")
 
         # Add a button to add Decimate modifier
-        layout.operator("my_operator.my_decimate_operator", icon='MOD_DECIM')
+        layout.operator("my_operator.my_decimate_operator", icon='MOD_DECIM', text="Add Decimate")
         scene = context.scene
-
 
 class MyCutOperatorplus(bpy.types.Operator):
     """cuts the object in half, with anything in right side of facing dirction"""
@@ -85,13 +84,12 @@ class MyCutOperatorNeg(bpy.types.Operator):
         self.report({'INFO'}, "Cut is Compelete")
         return {'FINISHED'}
 
-
 class MyMirrorOperator(bpy.types.Operator):
     """adds Mirror modifier"""
     bl_idname = "my_operator.my_mirror_operator"
     bl_label = "Add Mirror Y"
 
-    def execute(self, context):    
+    def execute(self, context):
         # Get the last selected object
         selected_objects = bpy.context.selected_objects
         if len(selected_objects) > 0:
@@ -107,7 +105,7 @@ class MyMirrorOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 class MyDecimateOperator(bpy.types.Operator):
-    """Operator to add Decimate modifier"""
+    """Add Decimate modifier"""
     bl_idname = "my_operator.my_decimate_operator"
     bl_label = "Add Modifier"
 

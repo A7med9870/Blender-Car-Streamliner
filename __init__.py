@@ -3,7 +3,7 @@ bl_info = {
     "author" : "A7med9870",
     "description" : "Offers tools to start making your cars faster",
     "blender" : (4, 1, 0),
-    "version" : (0, 1, 1),
+    "version" : (0, 1, 2),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -23,7 +23,7 @@ from . import Renamer                   #Very early in development, will help ad
 try:
     # Load another Blender file
     from . import ex
-    from . import ExportPanel #this will be fully removed in future
+    # from . import ExportPanel #this will be fully removed in future
 except Exception as e:
     print("Error loading file:", e)
 
@@ -33,13 +33,13 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
     show_tips_panel: bpy.props.BoolProperty(
         name="Show Tips Panel",
         description="Toggle visibility of the Tips Panel",
-        default=True,
+        default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
     show_Camera_panel: bpy.props.BoolProperty(
         name="Show Camera Panel",
         description="Toggle visibility of the Camera Panel",
-        default=True,
+        default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
     show_Export_panel: bpy.props.BoolProperty(
@@ -108,9 +108,9 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         row.prop(self, "show_tips_panel")
         row.prop(self, "show_Camera_panel")
 
-        row = layout.row()
-        row.prop(self, "show_Export_panel")
-        row.prop(self, "Disable_Export_force")
+        # row = layout.row()
+        # row.prop(self, "show_Export_panel")
+        # row.prop(self, "Disable_Export_force")
 
         row = layout.row()
         row.prop(self, "show_CarS_panel")
@@ -118,7 +118,7 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
 
         layout.prop(self, "CarRefenceCarRefencedropdown_enum1")
 
-        layout.prop(self, "FBXEdropdown_enum1")
+        # layout.prop(self, "FBXEdropdown_enum1")
 
         row = layout.row()
         row.operator("wm.url_open", text="Github Page").url = self.documentation_url
@@ -141,7 +141,7 @@ def register():
     TipsPanel.register()
     Renamer.register()
     ex.register()
-    ExportPanel.register()
+    # ExportPanel.register()
 
 def unregister():
     bpy.utils.unregister_class(UECarStreamlinerPreferences)
@@ -154,7 +154,7 @@ def unregister():
     TipsPanel.unregister()
     Renamer.unregister()
     ex.unregister()
-    ExportPanel.unregister()
+    # ExportPanel.unregister()
 
 
 if __name__ == "__main__":

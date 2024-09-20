@@ -34,10 +34,10 @@ class hamadacarsPanelExportAll(bpy.types.Panel):
     bl_context = "objectmode"
     bl_order = 7
 
-  #  @classmethod
-  #  def poll(cls, context):
- #       preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
-#        return preferences.show_Export_panel
+#   @classmethod
+#   def poll(cls, context):
+#      preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
+#      return preferences.show_Export_panel
     @classmethod
     def poll(cls, context):
         preferences = bpy.context.preferences.addons['Blender-Car-Streamliner'].preferences
@@ -45,6 +45,7 @@ class hamadacarsPanelExportAll(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         scn = context.scene
+        scene = context.scene
         layout.label(text="Export Path Location:")
         layout.prop(scn.my_tool, "path", text="")
         layout.label(text="Don't forget to UNCHECK RELATIVE PATH")
@@ -53,7 +54,14 @@ class hamadacarsPanelExportAll(bpy.types.Panel):
         layout.label(text="")
         layout.operator("myops.combined_exporter", text='Export Combined', icon='TRIA_RIGHT')
         layout.operator("myops.combined_export_zero_pos", text='Export Combined at Zero Position', icon='TRIA_RIGHT')
-        layout.operator("object.select_all_and_set_active_main_body", text="Select hole Car parts")
+        layout.operator("object.select_all_and_set_active_main_body", text="Select Hole Car parts")
+
+        # Check unit scale and show warning if it's not 0.01
+        # for some awful reasons, it has to be this number, something about double float shit
+        if scene.unit_settings.scale_length != 0.009999999776482582:
+            layout.label(text="WRONG UNIT SCALE FOR UE", icon='ERROR')
+
+        layout.label(text=f"Current Unit Scale: {scene.unit_settings.scale_length:.6f}")
 
 class hamadacarsBatchExport(bpy.types.Operator):
     bl_idname = "myops.batch_exporter"
@@ -69,6 +77,7 @@ class hamadacarsBatchExport(bpy.types.Operator):
         return {'FINISHED'}
 
 class hamadacarsExportZeroPos(bpy.types.Operator):
+    """Export at zero Position"""
     bl_idname = "myops.export_zero_pos"
     bl_label = "Export Selected at Zero Position"
     bl_options = {"UNDO"}

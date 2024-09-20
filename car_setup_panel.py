@@ -7,6 +7,7 @@ from bpy.types import (Panel, Operator, AddonPreferences, PropertyGroup)
 
 
 class SelectCarObjectsOperator(bpy.types.Operator):
+    """parents all added parts to the main body, and renames them respectfully"""
     bl_idname = "object.select_car_objects"
     bl_label = "Select Car Objects"
 
@@ -68,12 +69,43 @@ class OBJECT_PT_car_setup(bpy.types.Panel):
 
         # Car Wheels Selector
         layout.label(text="Car Wheels:")
+
+        # Creating rows for front and rear wheels
         wheel_labels = ["Front Left", "Front Right", "Rear Left", "Rear Right"]
-        for i, label in enumerate(wheel_labels):
-            layout.label(text=f"{label} Wheel:")
-            row = layout.row()
-            row.prop_search(context.scene, f"car_wheel_{i+1}_object", bpy.data, "objects", text="")
-            row.operator("object.select_car_wheel", text="", icon='RESTRICT_SELECT_OFF').index = i + 1
+
+        # Front wheels
+        row = layout.row(align=True)
+        col_left = row.column()  # Column for the left wheel
+        col_right = row.column()  # Column for the right wheel
+
+        # Add front left wheel in the left column
+        col_left.label(text=f"{wheel_labels[0]} Wheel:")
+        sub_row = col_left.row()
+        sub_row.prop_search(context.scene, "car_wheel_1_object", bpy.data, "objects", text="")
+        sub_row.operator("object.select_car_wheel", text="", icon='RESTRICT_SELECT_OFF').index = 1
+
+        # Add front right wheel in the right column
+        col_right.label(text=f"{wheel_labels[1]} Wheel:")
+        sub_row = col_right.row()
+        sub_row.prop_search(context.scene, "car_wheel_3_object", bpy.data, "objects", text="")
+        sub_row.operator("object.select_car_wheel", text="", icon='RESTRICT_SELECT_OFF').index = 3
+
+        # Rear wheels
+        row = layout.row(align=True)
+        col_left = row.column()  # Column for the left wheel
+        col_right = row.column()  # Column for the right wheel
+
+        # Add rear left wheel in the left column
+        col_left.label(text=f"{wheel_labels[2]} Wheel:")
+        sub_row = col_left.row()
+        sub_row.prop_search(context.scene, "car_wheel_2_object", bpy.data, "objects", text="")
+        sub_row.operator("object.select_car_wheel", text="", icon='RESTRICT_SELECT_OFF').index = 2
+
+        # Add rear right wheel in the right column
+        col_right.label(text=f"{wheel_labels[3]} Wheel:")
+        sub_row = col_right.row()
+        sub_row.prop_search(context.scene, "car_wheel_4_object", bpy.data, "objects", text="")
+        sub_row.operator("object.select_car_wheel", text="", icon='RESTRICT_SELECT_OFF').index = 4
 
         # Extra Car Parts Selector
         layout.label(text="Extra Car Parts:")
@@ -92,15 +124,15 @@ class OBJECT_PT_car_setup(bpy.types.Panel):
         layout.operator("object.select_car_objects", text="Set Vehicle Up", icon='HAND')
 
         # Select All Added Objects Button
-        layout.operator("object.select_all_added_objects", text="Select All Added Objects")
-        #layout.operator("object.animate_rotate_wheels_y_axis", text="Animate Rotate Wheels Y-Axis")
-        layout.operator("object.animate_rotate_front_wheels_right", text="Test Animation")
-        #layout.operator("object.animate_rotate_front_wheels_left", text="Animate Rotate Front Wheels Left")
-        layout.operator("object.select_all_and_set_active_main_body", text="Select hole Car parts")
+        layout.operator("object.select_all_added_objects", text="Select Everything not Main Body", icon='RESTRICT_SELECT_OFF')
 
+        # Animation and selection operators
+        layout.operator("object.animate_rotate_front_wheels_right", text="Test Animation", icon='ANIM_DATA')
+        layout.operator("object.select_all_and_set_active_main_body", text="Select Whole Car Parts", icon='RESTRICT_SELECT_ON')
 
 
 class SelectExtraCarPartObjectOperator(bpy.types.Operator):
+    """Selects the optional part of the car"""
     bl_idname = "object.select_extra_car_part_object"
     bl_label = "Select Extra Car Part Object"
     index: bpy.props.IntProperty()
@@ -114,6 +146,7 @@ class SelectExtraCarPartObjectOperator(bpy.types.Operator):
 
 
 class SelectMainCarBodyOperator(bpy.types.Operator):
+    """To select the main car's body"""
     bl_idname = "object.select_main_car_body"
     bl_label = "Select Main Car Body"
 
@@ -126,6 +159,7 @@ class SelectMainCarBodyOperator(bpy.types.Operator):
 
 
 class SelectCarWheelOperator(bpy.types.Operator):
+    """To select the wheel"""
     bl_idname = "object.select_car_wheel"
     bl_label = "Select Car Wheel"
     index: bpy.props.IntProperty()
@@ -136,9 +170,8 @@ class SelectCarWheelOperator(bpy.types.Operator):
             wheel_object.select_set(True)
         return {'FINISHED'}
 
-
-
 class SelectAllAddedObjectsOperator(bpy.types.Operator):
+    """Selects the entire car, expect main car body"""
     bl_idname = "object.select_all_added_objects"
     bl_label = "Select All Added Objects"
 
@@ -155,14 +188,13 @@ class SelectAllAddedObjectsOperator(bpy.types.Operator):
 
         return {'FINISHED'}
 
-
 class ExtraCarPartProperty(bpy.types.PropertyGroup):
     name: bpy.props.StringProperty(name="Name", default="")
     object: bpy.props.PointerProperty(name="Object", type=bpy.types.Object)
     is_selected: bpy.props.BoolProperty(name="Is Selected", default=False)
 
-
 class AddCarPartExtraOperator(bpy.types.Operator):
+    """adds more optional objects to parented to the main car body"""
     bl_idname = "object.add_car_part_extra"
     bl_label = "Add Extra Car Part"
 
@@ -176,6 +208,7 @@ class AddCarPartExtraOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 class RemoveCarPartExtraOperator(bpy.types.Operator):
+    """removes the extra car part, no longer will be selected with other buttons"""
     bl_idname = "object.remove_car_part_extra"
     bl_label = "Remove Extra Car Part"
     index: bpy.props.IntProperty()
@@ -186,6 +219,7 @@ class RemoveCarPartExtraOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 class AnimateRotateFrontWheelsRightOperator(bpy.types.Operator):
+    """Will put the car in animation loop, if it's moving everything right; then your car is corrrect, if not; you need to reapply rotation and scale; sometimes location as well"""
     bl_idname = "object.animate_rotate_front_wheels_right"
     bl_label = "Animate Rotate Front Wheels Right"
 
@@ -199,6 +233,9 @@ class AnimateRotateFrontWheelsRightOperator(bpy.types.Operator):
                 bpy.ops.object.select_all(action='DESELECT')
                 wheel_object.select_set(True)
 
+                # Set initial keyframe
+                wheel_object.rotation_euler = (0, 0, 0)
+                wheel_object.keyframe_insert(data_path="rotation_euler", frame=0)
                 # Set initial keyframe
                 wheel_object.rotation_euler = (0, 0, 0)
                 wheel_object.keyframe_insert(data_path="rotation_euler", frame=1)
@@ -216,6 +253,12 @@ class AnimateRotateFrontWheelsRightOperator(bpy.types.Operator):
                 bpy.ops.object.select_all(action='DESELECT')
                 wheel_object.select_set(True)
 
+                # Set nothing rotation keyframe
+                wheel_object.rotation_euler = (0, 0, 0)  # Rotate 45 degrees on the Z-axis
+                wheel_object.keyframe_insert(data_path="rotation_euler", frame=0)
+                # Set nothing rotation keyframe
+                wheel_object.rotation_euler = (0, 0, 0)  # Rotate 45 degrees on the Z-axis
+                wheel_object.keyframe_insert(data_path="rotation_euler", frame=1)
                 # Set nothing rotation keyframe
                 wheel_object.rotation_euler = (0, 1.5708, 0)  # Rotate 45 degrees on the Z-axis
                 wheel_object.keyframe_insert(data_path="rotation_euler", frame=20)
@@ -237,6 +280,7 @@ class AnimateRotateFrontWheelsRightOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 class SelectAllAndSetActiveMainBodyOperator(bpy.types.Operator):
+    """Selects the entire car, with the main body active, your selection should now be ready for exporting to UE"""
     bl_idname = "object.select_all_and_set_active_main_body"
     bl_label = "Select All and Set Active Main Body"
 
@@ -247,7 +291,6 @@ class SelectAllAndSetActiveMainBodyOperator(bpy.types.Operator):
             bpy.context.view_layer.objects.active = main_car_body
             main_car_body.select_set(True)
         return {'FINISHED'}
-
 
 def register():
     bpy.utils.register_class(ExtraCarPartProperty)
