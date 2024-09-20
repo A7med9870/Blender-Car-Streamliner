@@ -3,7 +3,7 @@ bl_info = {
     "author" : "A7med9870",
     "description" : "Offers tools to start making your cars faster",
     "blender" : (4, 1, 0),
-    "version" : (0, 1, 2),
+    "version" : (0, 1, 2,1),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"

@@ -87,7 +87,7 @@ class OBJECT_PT_car_setup(bpy.types.Panel):
         # Add front right wheel in the right column
         col_right.label(text=f"{wheel_labels[1]} Wheel:")
         sub_row = col_right.row()
-        sub_row.prop_search(context.scene, "car_wheel_3_object", bpy.data, "objects", text="")
+        sub_row.prop_search(context.scene, "car_wheel_2_object", bpy.data, "objects", text="")
         sub_row.operator("object.select_car_wheel", text="", icon='RESTRICT_SELECT_OFF').index = 3
 
         # Rear wheels
@@ -98,13 +98,13 @@ class OBJECT_PT_car_setup(bpy.types.Panel):
         # Add rear left wheel in the left column
         col_left.label(text=f"{wheel_labels[2]} Wheel:")
         sub_row = col_left.row()
-        sub_row.prop_search(context.scene, "car_wheel_2_object", bpy.data, "objects", text="")
+        sub_row.prop_search(context.scene, "car_wheel_4_object", bpy.data, "objects", text="")
         sub_row.operator("object.select_car_wheel", text="", icon='RESTRICT_SELECT_OFF').index = 2
 
         # Add rear right wheel in the right column
         col_right.label(text=f"{wheel_labels[3]} Wheel:")
         sub_row = col_right.row()
-        sub_row.prop_search(context.scene, "car_wheel_4_object", bpy.data, "objects", text="")
+        sub_row.prop_search(context.scene, "car_wheel_3_object", bpy.data, "objects", text="")
         sub_row.operator("object.select_car_wheel", text="", icon='RESTRICT_SELECT_OFF').index = 4
 
         # Extra Car Parts Selector
@@ -127,8 +127,8 @@ class OBJECT_PT_car_setup(bpy.types.Panel):
         layout.operator("object.select_all_added_objects", text="Select Everything not Main Body", icon='RESTRICT_SELECT_OFF')
 
         # Animation and selection operators
-        layout.operator("object.animate_rotate_front_wheels_right", text="Test Animation", icon='ANIM_DATA')
         layout.operator("object.select_all_and_set_active_main_body", text="Select Whole Car Parts", icon='RESTRICT_SELECT_ON')
+        layout.operator("object.animate_rotate_front_wheels_right", text="Test Animation", icon='ANIM_DATA')
 
 
 class SelectExtraCarPartObjectOperator(bpy.types.Operator):
