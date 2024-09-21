@@ -13,7 +13,7 @@ class VIEW3D_PT_Camera_support_panel(bpy.types.Panel):
     bl_region_type = "UI"
     bl_category = "UE5CS"
     bl_order = 6
-    
+
     @classmethod
     def poll(cls, context):
         preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
@@ -25,9 +25,9 @@ class VIEW3D_PT_Camera_support_panel(bpy.types.Panel):
         if bpy.context.space_data.clip_end < 10000:
             layout.operator("my_operator.my_clipend_operator", icon='OUTLINER_OB_CAMERA')
             layout.label(text="to view far")
-        if bpy.context.space_data.clip_end == 10000:   
+        if bpy.context.space_data.clip_end == 10000:
             layout.label(text="View is good")
-  
+
 class MyClipEndOperator(bpy.types.Operator):
     """Set the clip end value"""
     bl_idname = "my_operator.my_clipend_operator"
@@ -38,6 +38,7 @@ class MyClipEndOperator(bpy.types.Operator):
         space = bpy.context.space_data
         if space.type == 'VIEW_3D':
             space.clip_end = 10000
+        self.report({'INFO'}, "Camera has been set to see far")
         return {'FINISHED'}
 
 classes = (

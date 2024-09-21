@@ -7,14 +7,14 @@ class VIEW3D_PT_positions_support_panel(bpy.types.Panel):
     bl_region_type = "UI"
     bl_category = "UE5CS"
     bl_order = 4
-    
+
     def draw(self, context):
         layout = self.layout
-        
+
         # Add a button to reset the object's position to (0, 0, 0)
         layout.operator("my_operator.my_reset_position_operator", icon="META_CUBE")
         # Add a button to apply location transform
-        layout.operator("my_operator.my_transform_apply_operator", icon='OUTLINER_DATA_EMPTY') 
+        layout.operator("my_operator.my_transform_apply_operator", icon='OUTLINER_DATA_EMPTY')
         # Add a button to reset the 3D cursor
         layout.operator("my_operator.my_reset_cursor_operator", icon='PIVOT_CURSOR')
         # Add a button to set the 3D cursor to the current or last selected object
@@ -32,6 +32,7 @@ class MyResetPositionOperator(bpy.types.Operator):
         bpy.context.object.location[0] = 0
         bpy.context.object.location[1] = 0
         bpy.context.object.location[2] = 0
+        self.report({'INFO'}, 'Position has been rested')
         return {'FINISHED'}
 
 class MyTransformApplyOperator(bpy.types.Operator):
@@ -42,6 +43,7 @@ class MyTransformApplyOperator(bpy.types.Operator):
     def execute(self, context):
         # Apply location transform
         bpy.ops.object.transform_apply(location=True, rotation=False, scale=False)
+        self.report({'INFO'}, 'Transform has been applied')
         return {'FINISHED'}
 
 class MyResetCursorOperator(bpy.types.Operator):
@@ -52,6 +54,7 @@ class MyResetCursorOperator(bpy.types.Operator):
     def execute(self, context):
         # Reset the 3D cursor to the origin
         bpy.context.scene.cursor.location = (0, 0, 0)
+        self.report({'INFO'}, 'Cursor has been rested')
         return {'FINISHED'}
 
 class MyCursorToObjectOperator(bpy.types.Operator):
@@ -65,12 +68,13 @@ class MyCursorToObjectOperator(bpy.types.Operator):
         if len(selected_objects) > 0:
             obj = selected_objects[-1]
             bpy.context.scene.cursor.location = obj.location
+        self.report({'INFO'}, 'Cursor has been set to the selected')
         return {'FINISHED'}
 
 class MyScalingApply(bpy.types.Operator):
-    """Scale apply, Fixes your Car collision being small"""   
+    """Scale apply, Fixes your Car collision being small"""
     bl_idname = "my_operator.my_scale_apply"
-    bl_label = "Apply Object Scale" 
+    bl_label = "Apply Object Scale"
     def execute(self,context):
         bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
         self.report({'INFO'}, "Scale applying is Complete, your object should have now the proper scale inside Unreal")

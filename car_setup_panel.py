@@ -42,6 +42,7 @@ class SelectCarObjectsOperator(bpy.types.Operator):
                     # Rename the extra car part
                     part_obj.name = part.name
 
+        self.report({'INFO'}, "Car set up has been applied")
         return {'FINISHED'}
 
 
@@ -142,6 +143,7 @@ class SelectExtraCarPartObjectOperator(bpy.types.Operator):
             part = context.scene.extra_car_parts[self.index]
             if part and part.object:
                 part.object.select_set(True)
+                self.report({'INFO'}, f"Selected: {part.object.name}!")
         return {'FINISHED'}
 
 
@@ -155,6 +157,7 @@ class SelectMainCarBodyOperator(bpy.types.Operator):
         if main_car_body:
             bpy.context.view_layer.objects.active = main_car_body
             main_car_body.select_set(True)
+            self.report({'INFO'}, f"Selected!! {main_car_body.name}")
         return {'FINISHED'}
 
 
@@ -168,6 +171,7 @@ class SelectCarWheelOperator(bpy.types.Operator):
         wheel_object = getattr(context.scene, f"car_wheel_{self.index}_object", None)
         if wheel_object:
             wheel_object.select_set(True)
+            self.report({'INFO'}, f"Selected!! {wheel_object.name}")
         return {'FINISHED'}
 
 class SelectAllAddedObjectsOperator(bpy.types.Operator):
@@ -185,7 +189,7 @@ class SelectAllAddedObjectsOperator(bpy.types.Operator):
             for part in context.scene.extra_car_parts:
                 if part and part.object:
                     part.object.select_set(True)
-
+        self.report({'INFO'}, "Selected everything not main car's body")
         return {'FINISHED'}
 
 class ExtraCarPartProperty(bpy.types.PropertyGroup):
@@ -205,6 +209,7 @@ class AddCarPartExtraOperator(bpy.types.Operator):
         new_part.name = "New Part Name"
         if new_part.object:
             new_part.object.name = new_part.name
+        self.report({'INFO'}, "New part now can be attached to the car")
         return {'FINISHED'}
 
 class RemoveCarPartExtraOperator(bpy.types.Operator):
@@ -215,8 +220,11 @@ class RemoveCarPartExtraOperator(bpy.types.Operator):
 
     def execute(self, context):
         if hasattr(context.scene, "extra_car_parts") and self.index < len(context.scene.extra_car_parts):
-            context.scene.extra_car_parts.remove(self.index)
+            part_name = context.scene.extra_car_parts[self.index].name  # Get the name first
+            context.scene.extra_car_parts.remove(self.index)  # Then remove the part
+            self.report({'INFO'}, f"Removed {part_name} from the car :(")
         return {'FINISHED'}
+
 
 class AnimateRotateFrontWheelsRightOperator(bpy.types.Operator):
     """Will put the car in animation loop, if it's moving everything right; then your car is corrrect, if not; you need to reapply rotation and scale; sometimes location as well"""
@@ -277,6 +285,7 @@ class AnimateRotateFrontWheelsRightOperator(bpy.types.Operator):
 
         # Set end frame to 40
         context.scene.frame_end = 50
+        self.report({'INFO'}, "an animation has been added, remember to remove it before exporting to unreal")
         return {'FINISHED'}
 
 class SelectAllAndSetActiveMainBodyOperator(bpy.types.Operator):
@@ -290,6 +299,7 @@ class SelectAllAndSetActiveMainBodyOperator(bpy.types.Operator):
             bpy.ops.object.select_all_added_objects()
             bpy.context.view_layer.objects.active = main_car_body
             main_car_body.select_set(True)
+            self.report({'INFO'}, "Selected everything car that has been set'in up with the car, export the car with .export combined. button")
         return {'FINISHED'}
 
 def register():

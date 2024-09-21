@@ -120,6 +120,7 @@ class MyDecimateOperator(bpy.types.Operator):
         # Add Decimate modifier with ratio 0.05
         decimate_modifier = obj.modifiers.new(name="Decimate", type='DECIMATE')
         decimate_modifier.ratio = 0.5
+        self.report({'INFO'}, 'Decimated')
         return {'FINISHED'}
 
 

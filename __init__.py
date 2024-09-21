@@ -3,7 +3,7 @@ bl_info = {
     "author" : "A7med9870",
     "description" : "Offers tools to start making your cars faster",
     "blender" : (4, 1, 0),
-    "version" : (0, 1, 2,1),
+    "version" : (0, 1, 2,2),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -20,12 +20,7 @@ from . import positions_support_panel   #s
 from . import CameraPanel               #Increases the view distance, as it's too low when you scale everything up
 from . import TipsPanel                 #This might get removed in future, in older versions; it was more completed form
 from . import Renamer                   #Very early in development, will help adding a list of text added to the names of existing objects; mainly made to nfs modding
-try:
-    # Load another Blender file
-    from . import ex
-    # from . import ExportPanel #this will be fully removed in future
-except Exception as e:
-    print("Error loading file:", e)
+from . import ex                        #Export panel, the other has been removed
 
 class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
     bl_idname = __name__
@@ -36,36 +31,42 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
+    # the tips panel, corrently lacks the tips it should have
     show_Camera_panel: bpy.props.BoolProperty(
         name="Show Camera Panel",
         description="Toggle visibility of the Camera Panel",
         default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
+    # the Camera panel, not that helpful so it's false by defualt
     show_Export_panel: bpy.props.BoolProperty(
         name="Show Export to FBX Panel",
         description="Toggle visibility of the Export to FBX Panel",
         default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
+    # the Export panel, the option; when the old one still existed on the files
     Disable_Export_force: bpy.props.BoolProperty(
         name="Disable Export Forced Unit Scale",
         description="Toggle visibility of the Export Panel",
         default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
+    # the older way of removing it, it broke sometime ago; as well will be removed fully later on
     show_CarS_panel: bpy.props.BoolProperty(
         name="Show Car Set up Panel",
         description="Toggle visibility of the Camera Panel",
         default=True,
         update=lambda self, context: context.area.tag_redraw(),
     )
+    # the car set up panel, was painfull to get working; i still don't fully understand how it works'
     show_ExtraName_panel: bpy.props.BoolProperty(
         name="Show ExtraName Panel",
         description="Toggle visibility of the ExtraName Panel",
         default=False,
         update=lambda self, context: context.area.tag_redraw(),
     )
+    # the experimantal panel for changing names; i find it useless, main use was for nfs black box modding; i still don't get how to port cars there :('
     CarRefenceCarRefencedropdown_enum1: EnumProperty(
         name="Reference Tab",
         description="For more compactily",
@@ -76,6 +77,7 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         ],
         default="OPTION2"
     )
+    # the car refernce, this panel and it's options needs an either; rewrite or a new option for more compatibility hopefully'
     FBXEdropdown_enum1: EnumProperty(
         name="Export Tab",
         description="For Backwords Compaptily",
@@ -141,7 +143,6 @@ def register():
     TipsPanel.register()
     Renamer.register()
     ex.register()
-    # ExportPanel.register()
 
 def unregister():
     bpy.utils.unregister_class(UECarStreamlinerPreferences)
@@ -154,7 +155,6 @@ def unregister():
     TipsPanel.unregister()
     Renamer.unregister()
     ex.unregister()
-    # ExportPanel.unregister()
 
 
 if __name__ == "__main__":

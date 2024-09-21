@@ -48,13 +48,18 @@ class hamadacarsPanelExportAll(bpy.types.Panel):
         scene = context.scene
         layout.label(text="Export Path Location:")
         layout.prop(scn.my_tool, "path", text="")
-        layout.label(text="Don't forget to UNCHECK RELATIVE PATH")
+        row = layout.row()
+        if scene.uncheckwarn:
+            row.label(text="Don't forget to UNCHECK RELATIVE PATH")
+            layout.label(text="")
+            row = layout.row()
+        row.prop(scene, "uncheckwarn", text="ok") #enables the refernce explains; placed here to make the ui much cleaner        row.operator("preferences.addon_show", icon='SETTINGS').module = 'Blender-Car-Streamliner'
+        layout.operator("object.select_all_and_set_active_main_body", text="Select Hole Car parts")
         layout.operator("myops.batch_exporter", text='Export Separate', icon='TRIA_RIGHT')
         layout.operator("myops.export_zero_pos", text='Export Separate at Zero Position', icon='TRIA_RIGHT')
         layout.label(text="")
         layout.operator("myops.combined_exporter", text='Export Combined', icon='TRIA_RIGHT')
         layout.operator("myops.combined_export_zero_pos", text='Export Combined at Zero Position', icon='TRIA_RIGHT')
-        layout.operator("object.select_all_and_set_active_main_body", text="Select Hole Car parts")
 
         # Check unit scale and show warning if it's not 0.01
         # for some awful reasons, it has to be this number, something about double float shit
@@ -62,6 +67,12 @@ class hamadacarsPanelExportAll(bpy.types.Panel):
             layout.label(text="WRONG UNIT SCALE FOR UE", icon='ERROR')
 
         layout.label(text=f"Current Unit Scale: {scene.unit_settings.scale_length:.6f}")
+
+bpy.types.Scene.uncheckwarn = bpy.props.BoolProperty(
+    name="Show a tip",
+    description="the warning, might be bloated for experinced; yet needed if you are new to using this add-on",
+    default=True
+)
 
 class hamadacarsBatchExport(bpy.types.Operator):
     bl_idname = "myops.batch_exporter"
