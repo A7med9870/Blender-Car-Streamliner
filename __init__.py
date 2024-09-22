@@ -3,7 +3,7 @@ bl_info = {
     "author" : "A7med9870",
     "description" : "Offers tools to start making your cars faster",
     "blender" : (4, 1, 0),
-    "version" : (0, 1, 2,2),
+    "version" : (0, 1, 2, 3),
     "location" : "View3D",
     "warning" : "",
     "category" : "Object"
@@ -40,7 +40,7 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
     )
     # the Camera panel, not that helpful so it's false by defualt
     show_Export_panel: bpy.props.BoolProperty(
-        name="Show Export to FBX Panel",
+        name="Show Export",
         description="Toggle visibility of the Export to FBX Panel",
         default=False,
         update=lambda self, context: context.area.tag_redraw(),
@@ -111,12 +111,12 @@ class UECarStreamlinerPreferences(bpy.types.AddonPreferences):
         row.prop(self, "show_Camera_panel")
 
         # row = layout.row()
-        # row.prop(self, "show_Export_panel")
         # row.prop(self, "Disable_Export_force")
 
         row = layout.row()
         row.prop(self, "show_CarS_panel")
         row.prop(self, "show_ExtraName_panel")
+        row.prop(self, "show_Export_panel")
 
         layout.prop(self, "CarRefenceCarRefencedropdown_enum1")
 

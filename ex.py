@@ -34,26 +34,29 @@ class hamadacarsPanelExportAll(bpy.types.Panel):
     bl_context = "objectmode"
     bl_order = 7
 
-#   @classmethod
-#   def poll(cls, context):
-#      preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
-#      return preferences.show_Export_panel
     @classmethod
     def poll(cls, context):
-        preferences = bpy.context.preferences.addons['Blender-Car-Streamliner'].preferences
-        return preferences.FBXEdropdown_enum1 == "OPTION1"
+        preferences = context.preferences.addons['Blender-Car-Streamliner'].preferences
+        return preferences.show_Export_panel
+#    @classmethod
+#    def poll(cls, context):
+#        preferences = bpy.context.preferences.addons['Blender-Car-Streamliner'].preferences
+#        return preferences.FBXEdropdown_enum1 == "OPTION1"
     def draw(self, context):
         layout = self.layout
         scn = context.scene
         scene = context.scene
-        layout.label(text="Export Path Location:")
+        row = layout.row()
+        row.label(text="Export Path Location:")
+        row.prop(scene, "uncheckwarn", text="") #enables the refernce explains; placed here to make the ui much cleaner        row.operator("preferences.addon_show", icon='SETTINGS').module = 'Blender-Car-Streamliner'
         layout.prop(scn.my_tool, "path", text="")
         row = layout.row()
         if scene.uncheckwarn:
-            row.label(text="Don't forget to UNCHECK RELATIVE PATH")
+            layout.label(text="Don't forget to")
+            layout.label(text="UNCHECK")
+            layout.label(text="RELATIVE PATH")
             layout.label(text="")
             row = layout.row()
-        row.prop(scene, "uncheckwarn", text="ok") #enables the refernce explains; placed here to make the ui much cleaner        row.operator("preferences.addon_show", icon='SETTINGS').module = 'Blender-Car-Streamliner'
         layout.operator("object.select_all_and_set_active_main_body", text="Select Hole Car parts")
         layout.operator("myops.batch_exporter", text='Export Separate', icon='TRIA_RIGHT')
         layout.operator("myops.export_zero_pos", text='Export Separate at Zero Position', icon='TRIA_RIGHT')
